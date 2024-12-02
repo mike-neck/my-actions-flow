@@ -1,0 +1,23 @@
+name: flow
+on:
+  workflow_dispatch: {}
+jobs:
+  flow:
+    name: flow
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 落ちるよ
+        id: my-failure
+        run: |
+          echo "fail"
+          echo "test" | grep foo
+
+      - name: ハンドリング
+        if: failure()
+        run: |
+          echo "エラーだよ ${{ steps.my-failure.outcome }}"
+
+      - name: 通常時のステップ
+        run: |
+          echo "落ちたらここは実行してほしくないっす"
+
